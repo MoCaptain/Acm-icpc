@@ -20,70 +20,94 @@ const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
 int vis[10][10];
 int mp[10][10][10];
+int nw[10][10];
 bool v[10];
 int n , m , q;
 int res = 100;
-void dfs(int cnt, vector<vector<int> > nw(n , vector<int> (m))){
+vector<int> ans;
 
-	for(int i = 1; i <= n ; i ++){
-		for(int j = 1; j <= m ; j ++){
+void dfs(int cnt , vector<int> teq){
+	if(cnt > res || cnt > q)return;
+    bool flag = true;
 
-			if(nw[i][j] == vis[i][j])return;
+    for(int i = 1; i <= n ; i ++){
+        for(int j = 1; j <= m ; j ++){
+            if(nw[i][j] == 1 && vis[i][j] == 1)return;
+            if(nw[i][j] == 0 && vis[i][j] == 0){
+            	flag = false;
+            	break;
+            }
+            if(i == n && j == m && flag && cnt < res){
+                res = cnt;
+                ans = teq;
+                return;
+            }
+        }
+        if(!flag)break;
+    }
 
-			if(i == n && j == m){
-				res = min(res , cnt);
-			}
-		}
-	}
 
-	for(int i = 1; i <= q ; i ++){
-		if(v[i])continue;
-		v[i] = true;
-		
-		int temp[10][10];
+    for(int i = 1; i <= q ; i ++){
+        
+        if(v[i])continue;
+        v[i] = true;
 
-		for(int a = 1; a <= n ; a ++){
-			for(int b = 1; b <= m ; b ++){
-				temp[a][b] = nw[a][b];
-				nw[a][b] |= mp[a][b][i];
-			}
-		}
+        int temp[10][10];
 
-		dfs(cnt + 1);
+        for(int a = 1; a <= n ; a ++){
+            for(int b = 1; b <= m ; b ++){
+                temp[a][b] = nw[a][b];
+                nw[a][b] |= mp[a][b][i];
+            }
+        }
+        
+        teq.push_back(i);
+        dfs(cnt + 1 , teq);
+        teq.pop_back();
+        
+        for(int a = 1; a <= n ; a ++){
+            for(int b = 1; b <= m ; b ++){
+                nw[a][b] = temp[a][b];
+            }
+        }
 
-		for(int a = 1; a <= n ; a ++){
-			for(int b = 1; b <= m ; b ++){
-				nw[a][b] = temp[a][b];
-			}
-		}
-
-		v[i] = false;
-	}
+        v[i] = false;
+    }
 
 }
 
 void solve(){
     cin >> n >> m >> q;
     for(int i = 1; i <= n ; i ++){
-    	for(int j = 1; j <= m ; j ++){
-    		cin >> vis[i][j];
-    	}
+        for(int j = 1; j <= m ; j ++){
+            char op;
+            cin >> op;
+            vis[i][j] = op - '0';
+        }
     }
 
     for(int z = 1; z <= q; z ++){
-    	for(int i = 1; i <= n ; i ++){
-    		for(int j = 1; j <= m ; j ++){
-    			cin >> mp[i][j][z];
-    		}
-   	 	}
+        for(int i = 1; i <= n ; i ++){
+            for(int j = 1; j <= m ; j ++){
+                char op;
+                cin >> op;
+                mp[i][j][z] = op -'0';
+            }
+        }
     }
-    vector<vector<int> > ttt;
-    dfs(0,ttt);
+
+    vector<int> teq;
+    dfs(0,teq);
+
 
     if(res == 100){
-    	cout << -1 << endl;
+        cout << -1 << endl;
     }else{
-    	cout << res << endl;
+        cout << res << endl;
+        for(auto it : ans){
+        	cout << it << ' ';
+        }
+        cout << endl;
     }
 
 }
