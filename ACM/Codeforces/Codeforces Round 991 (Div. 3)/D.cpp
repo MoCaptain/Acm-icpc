@@ -24,7 +24,27 @@ const int mod = 1e9 + 7;
 void solve(){
     //mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     //uniform_int_distribution<int> rd(0, 9);
-    
+    string s;
+    cin >> s;
+    int len = s.length();
+    for(int i = 0 ; i < len ; i ++){
+        int idx = i;
+        int maxx = s[i] - '0';
+        for(int j = i + 1; j < min(len , i + 9); j ++){
+            if((s[j] - '0') - ( j - i ) > maxx){
+                maxx = s[j] - '0' - (j - i);
+                idx = j;
+            }
+        }
+
+        char tmp = maxx + '0';
+        for(int j = idx ; j > i ; j --){
+            swap(s[j] , s[j - 1]);
+        }
+        s[i] = tmp;
+
+    }
+    cout << s << endl;
 }
 
 signed main(){

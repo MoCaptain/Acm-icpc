@@ -20,28 +20,17 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-string s[N];
-void solve(){
-    //mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-    //uniform_int_distribution<int> rd(0, 9);
-    int n,m;
-    cin >> n >> m;
-    int res = 0;
-    int sum = 0;
 
-    for(int i = 1; i <= n ; i ++){
-        cin >> s[i];
+void solve(){
+    mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+    uniform_int_distribution<int> rd(0, 9);
+    int cnt = 0;
+    string s;
+    cin >> s;
+    for(int i = 1; s[i]; i ++){
+    	if(s[i] != s[i - 1])cnt++;
     }
-    for(int i = 1; i <= n ; i ++){
-        int len = s[i].length();
-        if(sum + len <= m){
-            res++;
-            sum += len;
-        }else{
-            break;
-        }
-    }
-    cout << res << endl;
+    cout << cnt << endl;
 }
 
 signed main(){
@@ -50,7 +39,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

@@ -20,28 +20,34 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-string s[N];
-void solve(){
-    //mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-    //uniform_int_distribution<int> rd(0, 9);
-    int n,m;
-    cin >> n >> m;
-    int res = 0;
-    int sum = 0;
 
-    for(int i = 1; i <= n ; i ++){
-        cin >> s[i];
+void solve(){
+    mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+    uniform_int_distribution<int> rd(0, 9);
+    string s;
+    cin >> s;
+    int cnt = 0;
+    int temp = 1;
+    int len = s.size();
+    for(int i = 1 ; i < len ; i ++){
+    	if(s[i] != s[i - 1]){
+    		temp++;
+    	}else{
+    		if(temp >= 2){
+    			for(int j = 1; j <= temp - 1; j ++){
+    				cnt += j;
+    			}
+    		}
+    		temp = 1;
+    	}
     }
-    for(int i = 1; i <= n ; i ++){
-        int len = s[i].length();
-        if(sum + len <= m){
-            res++;
-            sum += len;
-        }else{
-            break;
-        }
+
+	if(temp >= 2){
+    	for(int j = 1; j <= temp - 1; j ++){
+    		cnt += j;
+    	}
     }
-    cout << res << endl;
+    cout << cnt << endl;
 }
 
 signed main(){
@@ -50,7 +56,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }
