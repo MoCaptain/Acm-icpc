@@ -24,24 +24,45 @@ const int mod = 1e9 + 7;
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
+    int n,k;
+    cin >> n >> k;
+    vector<int> vec(n + 1);
+    map<int,int> mp;
+    vector<int> num(n + 1);
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+		cin >> vec[i];
+		mp[vec[i]] ++;
+		num[vec[i]] = k - vec[i];
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+
+    int res = n / 2;
+    vector<int> ary;
+    for(int i = 1; i <= n ; i ++){
+   		if(mp[num[vec[i]]] == 0){
+   			ary.push_back(vec[i]);
+   		}
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+
+    for(int i = 1; i <= n ; i ++){
+    	bool vis = false;
+   		if(mp[num[vec[i]]] == 0 && mp[vec[i]] > 0){
+   			mp[vec[i]]--;
+   			for(auto it : ary){
+   				if(mp[it] != 0){
+   					mp[it]--;
+   					vis = true;
+   					res--;
+   					break;
+   				}
+   			}
+   			if(vis == false){
+   				res--;
+   			}
+   		}
     }
+
+
+    cout << res << endl;
 
 }
 

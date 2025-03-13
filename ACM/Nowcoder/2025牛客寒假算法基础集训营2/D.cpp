@@ -11,8 +11,9 @@
 #include <queue>
 #include <stack>
 #include <bitset>
-#include <random>  
+#include <random>
 #include <chrono>
+#include <unordered_map>
 
 using namespace std;
 
@@ -20,29 +21,30 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-
 void solve(){
-    mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-    uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    string s;
+    cin >> s;
+    map<char , int > mp;
+    int res1 = 0;
+    for(int i = n - 1 ; i >= 0 ; i --){
+        mp[s[i]]++;
+        if(mp[s[i]] >= 2 ){
+            res1 = i + 1;
+            break;
+        }
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+    mp.clear();
+    int res2 = 0;
+    for(int i = 0 ; i < n ; i ++){
+        mp[s[i]]++;
+        if(mp[s[i]] >= 2 ){
+            res2 = n - i;
+            break;
+        }
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
-    }
-
+    cout << max(res1,res2) << endl;
 }
 
 signed main(){
@@ -51,7 +53,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

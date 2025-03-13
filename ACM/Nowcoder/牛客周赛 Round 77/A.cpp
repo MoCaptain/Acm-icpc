@@ -26,21 +26,18 @@ void solve(){
     uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
-    }
-    sort(a.begin() + 1 , a.end());
     if(n == 1){
-    	cout << -1 << endl;
-    	return;
-    }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+    	cout << "20250121" << endl;
+    }else if(n == 2){
+    	cout << "20250123" << endl;
+    }else if(n == 3){
+    	cout << "20250126" << endl;
+    }else if(n == 4){
+    	cout << "20250206" << endl;
+    }else if(n == 5){
+    	cout << "20250208" << endl;
+    }else if(n == 6){
+    	cout << "20250211" << endl;
     }
 
 }
@@ -51,7 +48,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

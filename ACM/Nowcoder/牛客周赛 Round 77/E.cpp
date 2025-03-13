@@ -24,25 +24,7 @@ const int mod = 1e9 + 7;
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
-    }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
-    }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
-    }
-
+    
 }
 
 signed main(){

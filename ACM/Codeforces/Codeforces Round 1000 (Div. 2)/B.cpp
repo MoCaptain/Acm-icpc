@@ -20,28 +20,28 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-
+int a[N],b[N];
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
+    int n,l,r;
+    cin >> n >> l >>r;
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+        cin >> a[i];
+        b[i] = a[i];
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+    sort(a + 1, a + r + 1);
+    sort(b + l, b + n + 1);
+    int sum1 , sum2;
+    sum1 = sum2 = 0;
+
+    for(int i = 1; i <= r - l + 1 ; i ++){
+        sum1 += a[i];
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+    for(int i = l ; i <= r; i ++){
+        sum2 += b[i];
     }
+    cout << min(sum1 , sum2) <<endl;
 
 }
 

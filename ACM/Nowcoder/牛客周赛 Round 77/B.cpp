@@ -26,22 +26,29 @@ void solve(){
     uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+    map<int,int> mp;
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    	int temp;
+    	cin >> temp;
+    	mp[temp]++;
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+    int minn = 1e9;
+    int maxx = 0;
+    for(int i = 1; i <= 9 ; i ++){
+    	minn = min(minn,mp[i]);
+    	maxx = max(maxx,mp[i]);
+    	if(mp[i] == 0){
+    		cout << "NO" << endl;
+    		return;
+    	}
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
+
+    if(maxx - minn >= 2){
+    	cout << "NO" << endl;
     }else{
-    	cout << a[n] << endl;
-    	return;
+    	cout << "YES" << endl;
     }
+
 
 }
 
@@ -51,7 +58,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

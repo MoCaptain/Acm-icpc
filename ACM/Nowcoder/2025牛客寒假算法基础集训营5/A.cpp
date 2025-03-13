@@ -11,7 +11,7 @@
 #include <queue>
 #include <stack>
 #include <bitset>
-#include <random>  
+#include <random>
 #include <chrono>
 
 using namespace std;
@@ -24,25 +24,20 @@ const int mod = 1e9 + 7;
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    int x;
+    char c;
+    cin >> x >> c;
+    if(c == '+'){
+        cout << x - 1 << ' ' << 1 << endl;
+    }else if(c == '-'){
+        if(x == 1e18){
+            cout << "1000000000000000001" << ' ' << 1 << endl;
+            return;
+        }
+        cout << x + 1 << ' ' << 1 << endl;
+    }else if(c == '*'){
+        cout << x << ' ' << 1 << endl;
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
-    }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
-    }
-
 }
 
 signed main(){
@@ -51,7 +46,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

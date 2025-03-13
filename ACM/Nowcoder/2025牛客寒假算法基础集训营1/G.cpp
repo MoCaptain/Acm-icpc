@@ -11,7 +11,7 @@
 #include <queue>
 #include <stack>
 #include <bitset>
-#include <random>  
+#include <random>
 #include <chrono>
 
 using namespace std;
@@ -20,28 +20,29 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-
+int a[N];
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+    int sum = 0;
+    int S = (1 + n) * n / 2;
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+        cin >> a[i];
+        sum += a[i];
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+    int res = 0;
+    sort(a + 1 , a + 1 + n);
+    for(int i = 1; i <= n ; i ++){
+        res += abs(a[i] - i);
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+    if(sum != S){
+        cout << -1 << endl;
+        return;
     }
+    cout << res/2 << endl;
+
 
 }
 
@@ -51,7 +52,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

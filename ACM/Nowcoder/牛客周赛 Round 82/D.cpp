@@ -11,38 +11,49 @@
 #include <queue>
 #include <stack>
 #include <bitset>
-#include <random>  
+#include <random>
 #include <chrono>
-
+#include <unordered_map>
 using namespace std;
 
 #define int long long
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-
+const int modd = 998244353;
+int a[N];
 void solve(){
-    mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-    uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
-    }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
-    }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+        cin >> a[i];
     }
 
+    for(int i = 2; i <= n ; i ++){
+        if(a[i] > a[i - 1]){
+            cout << 0 << endl;
+            return;
+        }
+    }
+
+    int res = 1;
+
+    map<int,bool> mp;
+
+
+    for(int i = 1; i <= n ; i ++){
+        if(mp[a[i]]){
+            int temp = (n - a[i]) - i + 2;//剩的选项
+            if(temp <= 0){
+                cout << 0 << endl;
+                return;
+            }
+            res = (res * temp) % modd;
+        }else{
+            mp[a[i]] = true;
+        }
+    }
+    cout << res << endl;
 }
 
 signed main(){

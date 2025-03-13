@@ -11,7 +11,7 @@
 #include <queue>
 #include <stack>
 #include <bitset>
-#include <random>  
+#include <random>
 #include <chrono>
 
 using namespace std;
@@ -26,22 +26,21 @@ void solve(){
     uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    string s;
+    cin >> s;
+
+    int res = 0;
+    int num = 0;
+    for(int i = 0 ; i < n - 1 ; i ++){
+        if(s[i] == 'u'){
+            if(s.substr(i, 8) == "uwawauwa"){
+                if(s[i - 1] == 'u')res--;
+                res += num;
+            }
+            num++;
+        }
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
-    }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
-    }
+    cout << res << endl;
 
 }
 

@@ -26,22 +26,24 @@ void solve(){
     uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    deque<int> deq;
+    deq.push_back(n);
+    int temp = ceil(1.0 * n / 5);
+    for(int i = 1; i <= n / 2; i ++){
+		deq.push_front((i & temp) + 1);
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+
+    for(int i = 1; i <= (n - 1) / 2; i ++){
+		deq.push_back((i & (temp - 1)) + 2);
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+
+    while(deq.size()){
+    	int temp = deq.front();
+    	cout << temp << ' ';
+    	deq.pop_front();
     }
+    cout << endl;
+
 
 }
 

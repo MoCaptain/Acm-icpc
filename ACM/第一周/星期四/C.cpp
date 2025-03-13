@@ -11,7 +11,7 @@
 #include <queue>
 #include <stack>
 #include <bitset>
-#include <random>  
+#include <random>
 #include <chrono>
 
 using namespace std;
@@ -20,28 +20,34 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-
 void solve(){
-    mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-    uniform_int_distribution<int> rd(0, 9);
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    int n,k;
+    cin >> n >> k;
+    if(k & 1){
+        cout << 1 << endl;
+        return;
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+    //MID = n;
+    int idx = (pow(2 , n) + 1) / 2;
+    int num = n;
+    if(idx == k){
+        cout << num << endl;
+        return;
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+    int L = 0;
+    int R = pow(2 , n);
+    while(idx != k){
+        if(k > idx){
+            L = idx;
+            idx = (idx + R) / 2;
+            num--;
+        }else if(k < idx){
+            R = idx;
+            idx = (L + idx) / 2;
+            num--;
+        }
     }
+    cout << num << endl;
 
 }
 
@@ -51,7 +57,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

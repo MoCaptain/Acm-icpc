@@ -20,28 +20,56 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
+char mp[1010][1010];
 
+struct node{
+	int num;
+	int cnt;
+}a[N],b[N];
+
+bool cmp(node A,node B){
+	if(A.cnt == B.cnt)return A.num > B.num;
+	return A.cnt < B.cnt;
+}
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+    
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    	b[i].num = a[i].num = i;
+    	b[i].cnt = a[i].cnt = 0;
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+
+    for(int i = 1; i <= n ; i ++){
+    	for(int j = 1; j <= n ; j ++){
+    		cin >> mp[i][j];
+    		if(j > i)a[i].cnt++;
+    	}
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+
+    for(int i = 1; i <= n ; i ++){
+    	for(int j = i + 1; j <= n ; j ++){
+    		if(mp[i][j] == '1'){
+    			if(a[i].cnt < a[j].cnt){
+    				a[j].cnt++;
+    				mp[i][j] = mp[j][i] = '1';
+    			}
+    		}
+    		
+    	}
     }
+
+
+
+    sort(a + 1 , a + 1 + n , cmp);
+
+    for(int i = 1; i <= n ; i ++){
+    	cout << b[i].num << ' ';
+    }
+    cout << endl;
+
 
 }
 

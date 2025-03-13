@@ -22,26 +22,46 @@ const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
 
 void solve(){
-    mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-    uniform_int_distribution<int> rd(0, 9);
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
+    int n,m;
+    cin >> n >> m;
+    vector<int> num(n * m + 1);
+    vector<int> cnt(n + 1);
+    bool vis = false;
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    	vector<int> temp;
+
+    	for(int j = 1; j <= m ; j ++){
+    		int x;
+    		cin >> x;
+    		temp.push_back(x);
+ 			num[x] = i;
+    	}
+
+    	sort(temp.begin() , temp.end());
+
+    	for(int j = 1; j < m ; j ++){
+    		if(temp[j] - temp[j - 1] == 1){
+    			vis = true;
+    			break;
+    		}
+    	}
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
+    if(n == 1)vis = false;
+    if(vis){
+    	cout << "-1" << endl;
     	return;
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
+
+    for(int i = 0; i < n * m; i ++){
+    	cnt[num[i]]++;
+    	if(cnt[num[i]] == m){
+    		cout << num[i] << ' ';
+    	}
     }
+    cout << endl;
+
+
+
 
 }
 

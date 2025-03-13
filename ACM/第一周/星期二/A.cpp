@@ -24,24 +24,34 @@ const int mod = 1e9 + 7;
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
-    int n;
-    cin >> n;
-    vector<int> a(n + 1);
-    for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
-    }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
-    }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
+    int n,x,k;
+    cin >> n >> x >> k;
+    vector<int> v(n + 1);
+    for(int i = 1; i <= n ; i ++)cin >> v[i];
+    	sort(v.begin() + 1 , v.end());
+
+    if(k == 0){
+    	for(int i = 1; i < n ; i ++){
+    		if(v[i + 1] - v[i] > x){
+    			cout << "Y" << endl;
+    			return;
+    		}
+    	}
+    	cout << "N" << endl;
     }else{
-    	cout << a[n] << endl;
-    	return;
+    	for(int l = 0 , r = 0 ; r <= n ; r ++){
+    		while(v[r] - v[l] > x){
+    			l ++;
+    		}
+    		if(r - l <= k){
+    			cout << "Y" << endl;
+    			return;
+    		}
+    	}
+    	cout << "N" << endl;
     }
+
+
 
 }
 
@@ -51,7 +61,7 @@ signed main(){
     std::cout.tie(nullptr);
     int T;
     T = 1;
-    std::cin >> T;
+    //std::cin >> T;
     while(T--)solve();
     return 0;
 }

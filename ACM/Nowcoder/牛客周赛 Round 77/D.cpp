@@ -20,28 +20,45 @@ using namespace std;
 #define endl "\n"
 const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
-
+int w[N];
 void solve(){
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> rd(0, 9);
     int n;
     cin >> n;
-    vector<int> a(n + 1);
+    vector<int> cnt(70);
+    int maxx = 0;
+
+    map<int,set<int> > mp;
+
     for(int i = 1; i <= n ; i ++){
-    	cin >> a[i];
+    	cin >> w[i];
+    	for(int j = 0 ; j <= 63; j ++){
+    		int temp = ((w[i]>> j) & 1);
+    		if(temp){
+    			cnt[j]++;
+    			maxx = max(maxx , j);
+    		}else{
+    			mp[j].insert(i);
+    		}
+    	}
     }
-    sort(a.begin() + 1 , a.end());
-    if(n == 1){
-    	cout << -1 << endl;
-    	return;
+
+    int res = 0;
+    int sum = 0;
+
+    for(int i = 0; i <= maxx ; i ++){
+    	if(cnt[i] == 0){
+    		int temp = n;
+    		temp -= mp[i].size();
+    		sum += mp[i].size();
+    		res = max(res , temp);
+    	}
     }
-    if(a[n - 1] == 1){
-    	cout << a[n] - 1 << endl;
-    	return;
-    }else{
-    	cout << a[n] << endl;
-    	return;
-    }
+
+
+    cout << max(res , n - sum) << endl;
+
 
 }
 
