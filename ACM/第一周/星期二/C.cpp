@@ -22,7 +22,7 @@ const int N = 2e5 + 10;
 const int mod = 1e9 + 7;
 
 void solve(){
-    string s;
+    std::string s;
     cin >> s;
     s = '0' + s;
     int n = s.size();
